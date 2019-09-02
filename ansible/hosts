@@ -1,0 +1,10 @@
+[webservers]
+# Add hosts here
+3.16.154.158
+
+
+[webservers:vars]
+# Local variables for Ansible playbooks
+ansible_ssh_user=ubuntu
+github_user=minelminel
+app_name=demo-deploy

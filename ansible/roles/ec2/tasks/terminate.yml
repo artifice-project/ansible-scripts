@@ -1,0 +1,4 @@
+---
+- name: Running Terminate plays
+  debug:
+    msg: "oh no world, this is the Terminate play"

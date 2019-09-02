@@ -1,0 +1,7 @@
+---
+- name: Execute EC2 roles
+  hosts: localhost
+  connection: local
+  gather_facts: False
+  roles:
+    - role: ec2

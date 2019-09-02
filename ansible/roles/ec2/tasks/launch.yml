@@ -1,0 +1,51 @@
+---
+# # creates a new ubuntu image with custom security group
+# # provisioning is done with the 'deploy' module
+- name: Running Launch plays
+  debug:
+    # msg: "greetings world, this is the Launch play"
+    msg: "{{ Name }}"
+
+- name: Setting up Security Group
+  ec2_group:
+    name: Artifice_AWS_Security_Grp
+    description: Rules allowing HTTP traffic on port 22 and 80
+    region: us-east-2
+    rules:
+      - proto: tcp
+        from_port: 80
+        to_port: 80
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: 22
+        to_port: 22
+        cidr_ip: 0.0.0.0/0
+    rules_egress:
+      - proto: all
+        cidr_ip: 0.0.0.0/0
+
+- name: Provision an EC2 Instance
+  ec2:
+    instance_type: t2.micro
+    key_name: artifice
+    # AMAZON LINUX
+    # image: ami-0d8f6eb4f641ef691
+    # RHEL FEDORA
+    # image: ami-0520e698dd500b1d1
+    # UBUNTU
+    image: ami-05c1fa8df71875112
+    region: us-east-2
+    wait: yes
+    wait_timeout: 500
+    count: 1
+    instance_tags:
+      Name: "{{ Name }}"
+    monitoring: no
+    vpc_subnet_id: subnet-584bfa14
+    assign_public_ip: yes
+    group: Artifice_AWS_Security_Grp
+  register: ec2_out
+
+- name: Wait for SSH to come up
+  wait_for: host={{ item.public_dns_name }} port=22 delay=60 timeout=320 state=started
+  with_items: "{{ ec2_out.instances }}"
