@@ -1,0 +1,20 @@
+---
+- name: Install base packages
+  become: yes
+  include: system.yml
+  tags: ['system']
+
+- name: Install application
+  become: no
+  include: app.yml
+  tags: ['app']
+
+- name: Configure the server
+  become: yes
+  include: server.yml
+  tags: ['server']
+
+# - name: Test if site is accessable
+#   become: no
+#   include: test.yml
+#   tags: ['test']

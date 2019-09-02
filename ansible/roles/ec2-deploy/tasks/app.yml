@@ -1,0 +1,11 @@
+---
+- name: Clone source repository
+  git:
+    repo: 'https://github.com/{{ github_user }}/{{ app_name }}.git'
+    dest: /home/{{ ansible_ssh_user }}/{{ app_name }}
+    update: yes  # Does a git pull if the repo already exists
+- name: install modules in a virtualenv
+  pip:
+    requirements: /home/{{ ansible_ssh_user }}/{{ app_name }}/requirements.txt
+    virtualenv: /home/{{ ansible_ssh_user }}/{{ app_name }}/env
+    virtualenv_python: python3

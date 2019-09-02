@@ -1,10 +1,10 @@
 [webservers]
 # Add hosts here
-3.16.154.158
+52.14.35.142
 
 
 [webservers:vars]
 # Local variables for Ansible playbooks
 ansible_ssh_user=ubuntu
-github_user=minelminel
+github_user=artifice-project
 app_name=demo-deploy

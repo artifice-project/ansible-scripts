@@ -1,0 +1,33 @@
+---
+- name: update cache
+  apt:
+    update_cache: yes
+    force_apt_get: True
+    cache_valid_time: 36000
+
+- name: Install package dependencies
+  apt:
+    name: "{{ packages }}"
+    state: latest
+    update_cache: yes
+    force_apt_get: True
+  vars:
+    packages:
+      - python3-pip
+      - python3-dev
+      - git
+      - tree
+      - nginx
+
+- name: Install virtualenv
+  pip:
+    name: virtualenv
+    state: present
+
+- name: Upgrade pip core packages
+  pip:
+    name:
+      - pip
+      - setuptools
+      - wheel
+    state: latest

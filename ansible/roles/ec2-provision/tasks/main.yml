@@ -9,7 +9,7 @@
   fail:
     msg: "Specify 'Name' for the cluster with  --extra-vars Name={}"
   when: Name is undefined
-  tags: ['launch','deploy','start','stop','terminate']
+  tags: ['launch','start','stop','terminate']
 
 
 - name: Describe EC2 running instances
@@ -20,11 +20,6 @@
 - name: Launch a new EC2 instance
   include: launch.yml
   tags: ['launch']
-
-# verify requires  Name=<str>
-- name: Deploy application on EC2 instance
-  include: deploy.yml
-  tags: ['deploy']
 
 # verify requires  Name=<str>
 - name: Start stopped EC2 instance
