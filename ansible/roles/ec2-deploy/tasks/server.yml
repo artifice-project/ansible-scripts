@@ -1,4 +1,5 @@
 ---
+# set up nginx service, enable, and restart 
 - name: Template systemd service config
   template:
     src: templates/service.j2

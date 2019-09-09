@@ -11,7 +11,7 @@
 - name: Gettings Public IP from instances
   # no_log: True
   ec2_instance_facts:
-    region: us-east-2
+    region: "{{ region }}"
     filters:
       instance-state-name: ["running"]
       # instance-state-name: ["running", "terminated", "stopped"]

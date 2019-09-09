@@ -1,5 +1,6 @@
 ---
 # tasks file for ec2
+# https://github.com/tirupathiogirala/Ansible-Playbook
 - name: Fail play if no tag is supplied
   fail:
     msg: "You must specify which task(s) you want to run with  --tags 'start, stop'"

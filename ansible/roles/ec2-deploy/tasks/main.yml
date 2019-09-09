@@ -4,6 +4,11 @@
   include: system.yml
   tags: ['system']
 
+- name: Configure postgres
+  become: yes
+  include: database.yml
+  tags: ['database']
+
 - name: Install application
   become: no
   include: app.yml

@@ -1,2 +1,21 @@
 ---
 # defaults file for ec2
+instance_count: 1
+key_name: artifice
+instance_type: t2.micro
+region: us-east-2
+# AMAZON LINUX
+# image: ami-0d8f6eb4f641ef691
+# RHEL FEDORA
+# image: ami-0520e698dd500b1d1
+# UBUNTU
+image: ami-05c1fa8df71875112
+vpc_subnet_id: subnet-584bfa14
+security_grp_name: Artifice_AWS_Security_Grp
+http_port: 80
+ssh_port: 22
+cidr_ip: 0.0.0.0/0
+wait_timeout: 500
+assign_public_ip: yes
+monitoring: no
+wait: yes
