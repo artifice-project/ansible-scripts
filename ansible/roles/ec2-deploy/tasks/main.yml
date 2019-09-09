@@ -4,6 +4,11 @@
   include: system.yml
   tags: ['system']
 
+- name: Set environment variables
+  become: yes
+  include: environment.yml
+  tags: ['env']
+
 - name: Configure postgres
   become: yes
   include: database.yml
@@ -19,7 +24,7 @@
   include: server.yml
   tags: ['server']
 
-# - name: Test if site is accessable
-#   become: no
-#   include: test.yml
-#   tags: ['test']
+- name: Test if site is accessable
+  become: no
+  include: test.yml
+  tags: ['test']

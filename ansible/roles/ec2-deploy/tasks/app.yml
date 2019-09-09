@@ -12,12 +12,11 @@
     virtualenv: /home/{{ ansible_ssh_user }}/{{ app_name }}/env
     virtualenv_python: python3
 
-- name: Run database migrations
-  command: >
-    /home/{{ ansible_ssh_user }}/{{ app_name }}/env/bin/python
-    ./manage.py
-    --config config/local.py
-    db
-    upgrade
-  args:
-    chdir: /home/{{ ansible_ssh_user }}/{{ app_name }}
+# - name: Run database migrations
+#   command: >
+#     /home/{{ ansible_ssh_user }}/{{ app_name }}/env/bin/python
+#     ./manage.py
+#     db
+#     upgrade
+#   args:
+#     chdir: /home/{{ ansible_ssh_user }}/{{ app_name }}

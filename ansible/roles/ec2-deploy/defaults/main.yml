@@ -1,21 +1,26 @@
 ---
 # defaults file for ec2-deploy
+repo_url: https://github.com/{{ github_user }}/{{ app_name }}.git
 packages:
   - python3-pip
   - python3-dev
   - git
   - tree
   - nginx
-  - postgresql
-  - postgresql-contrib
-
 pip_core:
   - pip
   - setuptools
   - wheel
-
 python_core:
   - virtualenv
-  - psycopg2-binary
-
-repo_url: https://github.com/{{ github_user }}/{{ app_name }}.git
+postgres_core:
+  - postgresql
+  - postgresql-contrib
+  - python3-psycopg2
+os_environment:
+  - key: SQLALCHEMY_DATABASE_URI
+    value : postgresql://{{ postgres_user }}:{{ postgres_password }}/{{ postgres_database }}
+  - key: CELERY_BROKER_URL
+    value : postgresql://{{ postgres_user }}:{{ postgres_password }}/{{ postgres_database }}
+  - key: FLASK_CONFIG_PATH
+    value: config/staging.py
