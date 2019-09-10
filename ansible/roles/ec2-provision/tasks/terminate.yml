@@ -25,6 +25,7 @@
   register: ec2_metadata
 
 - name: Add instance_id to list
+  no_log: True
   set_fact:
     instance_ids: "{{ instance_ids }} + [ '{{ item.instance_id }}' ] "
   with_items: "{{ ec2_metadata.instances }}"

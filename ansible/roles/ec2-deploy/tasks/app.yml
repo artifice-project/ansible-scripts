@@ -5,18 +5,46 @@
     repo: "{{ repo_url }}"
     dest: /home/{{ ansible_ssh_user }}/{{ app_name }}
     update: yes  # Does a git pull if the repo already exists
+    force: yes
 
-- name: install modules in a virtualenv
+- name: Install virtualenv packages
   pip:
     requirements: /home/{{ ansible_ssh_user }}/{{ app_name }}/requirements.txt
     virtualenv: /home/{{ ansible_ssh_user }}/{{ app_name }}/env
     virtualenv_python: python3
 
-# - name: Run database migrations
-#   command: >
-#     /home/{{ ansible_ssh_user }}/{{ app_name }}/env/bin/python
-#     ./manage.py
-#     db
-#     upgrade
-#   args:
-#     chdir: /home/{{ ansible_ssh_user }}/{{ app_name }}
+- name: Manager db init
+  command: >
+    /home/{{ ansible_ssh_user }}/{{ app_name }}/env/bin/python
+    ./manage.py
+    db
+    init
+  ignore_errors: yes
+  args:
+    chdir: /home/{{ ansible_ssh_user }}/{{ app_name }}
+  environment:
+    PGPASSWORD: "{{ postgres_password }}"
+
+- name: Manager db migrate
+  command: >
+    /home/{{ ansible_ssh_user }}/{{ app_name }}/env/bin/python
+    ./manage.py
+    db
+    migrate
+  ignore_errors: yes
+  args:
+    chdir: /home/{{ ansible_ssh_user }}/{{ app_name }}
+  environment:
+    PGPASSWORD: "{{ postgres_password }}"
+
+- name: Manager db upgrade
+  command: >
+    /home/{{ ansible_ssh_user }}/{{ app_name }}/env/bin/python
+    ./manage.py
+    db
+    upgrade
+  ignore_errors: yes
+  args:
+    chdir: /home/{{ ansible_ssh_user }}/{{ app_name }}
+  environment:
+    PGPASSWORD: "{{ postgres_password }}"

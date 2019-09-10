@@ -19,6 +19,11 @@
         from_port: "{{ ssh_port }}"
         to_port: "{{ ssh_port }}"
         cidr_ip: "{{ cidr_ip }}"
+      - proto: tcp
+        from_port: "{{ debug_port }}"
+        to_port: "{{ debug_port }}"
+        cidr_ip: "{{ cidr_ip }}"
+        # when: "{{ DEBUG_8000 }} | bool == True"
     rules_egress:
       - proto: all
         cidr_ip: "{{ cidr_ip }}"

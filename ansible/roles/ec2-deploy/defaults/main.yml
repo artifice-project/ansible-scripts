@@ -16,11 +16,16 @@ python_core:
 postgres_core:
   - postgresql
   - postgresql-contrib
+  - postgresql-client-common
   - python3-psycopg2
 os_environment:
   - key: SQLALCHEMY_DATABASE_URI
-    value : postgresql://{{ postgres_user }}:{{ postgres_password }}/{{ postgres_database }}
+    value : postgresql+psycopg2://{{ postgres_user }}:{{ postgres_password }}@localhost:5432/{{ postgres_database }}
   - key: CELERY_BROKER_URL
-    value : postgresql://{{ postgres_user }}:{{ postgres_password }}/{{ postgres_database }}
+    value : postgresql+psycopg2://{{ postgres_user }}:{{ postgres_password }}@localhost:5432/{{ postgres_database }}
   - key: FLASK_CONFIG_PATH
     value: config/staging.py
+  # - key: PGPASSWORD
+  #   value: "{{ postgres_password }}"
+gunicorn_error_log: /home/{{ ansible_ssh_user }}/{{ app_name }}/gunicorn-error.log
+gunicorn_access_log: /home/{{ ansible_ssh_user }}/{{ app_name }}/gunicorn-access.log
