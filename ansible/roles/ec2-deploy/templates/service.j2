@@ -11,7 +11,7 @@ Environment="PATH=/home/{{ ansible_ssh_user }}/{{ app_name }}/env/bin"
 ExecStart=/home/{{ ansible_ssh_user }}/{{ app_name }}/env/bin/gunicorn \
           --workers 3 \
           --bind unix:{{ app_name }}.sock \
-          -m 007 wsgi:application \
+          -m 007 {{ wsgi_path }}:application \
           --error-logfile {{ gunicorn_error_log }} \
           --log-file {{ gunicorn_access_log }} \
           --log-level DEBUG \

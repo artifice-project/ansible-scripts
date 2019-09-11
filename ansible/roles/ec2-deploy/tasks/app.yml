@@ -13,10 +13,20 @@
     virtualenv: /home/{{ ansible_ssh_user }}/{{ app_name }}/env
     virtualenv_python: python3
 
-- name: Manager db init
+- name: Install {{ app_name }} source
+  pip:
+    name: /home/{{ ansible_ssh_user }}/{{ app_name }}
+    extra_args: '-e'   # this creates a link rather then copying the files
+    virtualenv: /home/{{ ansible_ssh_user }}/{{ app_name }}/env
+
+# - name: Clear migration artifacts
+#   file:
+#     state: absent
+#     path: /home/{{ ansible_ssh_user }}/{{ app_name }}/migrations/
+
+- name: Manager database initalization
   command: >
-    /home/{{ ansible_ssh_user }}/{{ app_name }}/env/bin/python
-    ./manage.py
+    /home/{{ ansible_ssh_user }}/{{ app_name }}/env/bin/{{ entry_point }}
     db
     init
   ignore_errors: yes
@@ -25,10 +35,9 @@
   environment:
     PGPASSWORD: "{{ postgres_password }}"
 
-- name: Manager db migrate
+- name: Manager database migration
   command: >
-    /home/{{ ansible_ssh_user }}/{{ app_name }}/env/bin/python
-    ./manage.py
+    /home/{{ ansible_ssh_user }}/{{ app_name }}/env/bin/{{ entry_point }}
     db
     migrate
   ignore_errors: yes
@@ -37,14 +46,26 @@
   environment:
     PGPASSWORD: "{{ postgres_password }}"
 
-- name: Manager db upgrade
+- name: Manager database upgrade
   command: >
-    /home/{{ ansible_ssh_user }}/{{ app_name }}/env/bin/python
-    ./manage.py
+    /home/{{ ansible_ssh_user }}/{{ app_name }}/env/bin/{{ entry_point }}
     db
     upgrade
-  ignore_errors: yes
+  ignore_errors: no
   args:
     chdir: /home/{{ ansible_ssh_user }}/{{ app_name }}
   environment:
     PGPASSWORD: "{{ postgres_password }}"
+
+
+# - name: Run a Python script with cli args
+#   command: >
+#     /home/{{ ansible_ssh_user }}/{{ app_name }}/env/bin/python
+#     ./manage.py
+#     db
+#     upgrade
+#   ignore_errors: yes
+#   args:
+#     chdir: /home/{{ ansible_ssh_user }}/{{ app_name }}
+#   environment:
+#     PGPASSWORD: "{{ postgres_password }}"
