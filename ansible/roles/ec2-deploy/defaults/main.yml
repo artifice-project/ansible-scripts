@@ -25,8 +25,9 @@ os_environment:
     value : postgresql+psycopg2://{{ postgres_user }}:{{ postgres_password }}@localhost:5432/{{ postgres_database }}
   - key: FLASK_CONFIG_PATH
     value: ../config/staging.py
-  # - key: PGPASSWORD
-  #   value: "{{ postgres_password }}"
+  - key: AUTH_TOKEN
+    value: supersecrettoken
+
 gunicorn_error_log: /home/{{ ansible_ssh_user }}/{{ app_name }}/gunicorn-error.log
 gunicorn_access_log: /home/{{ ansible_ssh_user }}/{{ app_name }}/gunicorn-access.log
 wsgi_path: "{{ entry_point }}.core.wsgi"

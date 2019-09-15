@@ -24,7 +24,7 @@
 #     state: absent
 #     path: /home/{{ ansible_ssh_user }}/{{ app_name }}/migrations/
 
-- name: Manager database initalization
+- name: Manager Database initalization
   command: >
     /home/{{ ansible_ssh_user }}/{{ app_name }}/env/bin/{{ entry_point }}
     db
@@ -32,10 +32,8 @@
   ignore_errors: yes
   args:
     chdir: /home/{{ ansible_ssh_user }}/{{ app_name }}
-  environment:
-    PGPASSWORD: "{{ postgres_password }}"
 
-- name: Manager database migration
+- name: Manager Database migration
   command: >
     /home/{{ ansible_ssh_user }}/{{ app_name }}/env/bin/{{ entry_point }}
     db
@@ -43,10 +41,8 @@
   ignore_errors: yes
   args:
     chdir: /home/{{ ansible_ssh_user }}/{{ app_name }}
-  environment:
-    PGPASSWORD: "{{ postgres_password }}"
 
-- name: Manager database upgrade
+- name: Manager Database upgrade
   command: >
     /home/{{ ansible_ssh_user }}/{{ app_name }}/env/bin/{{ entry_point }}
     db
@@ -54,9 +50,14 @@
   ignore_errors: no
   args:
     chdir: /home/{{ ansible_ssh_user }}/{{ app_name }}
-  environment:
-    PGPASSWORD: "{{ postgres_password }}"
 
+- name: Start Celery workers
+  command: >
+    /home/{{ ansible_ssh_user }}/{{ app_name }}/env/bin/{{ entry_point }}
+    runcelery &
+  ignore_errors: no
+  args:
+    chdir: /home/{{ ansible_ssh_user }}/{{ app_name }}
 
 # - name: Run a Python script with cli args
 #   command: >
