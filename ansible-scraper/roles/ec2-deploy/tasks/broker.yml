@@ -1,0 +1,32 @@
+---
+# configure rabbitmq-server
+- name: Ensure rabbitmq is installed
+  apt:
+    name: rabbitmq-server
+    state: present
+    update_cache: yes
+    force_apt_get: yes
+
+- name: Enable rabbitmq plugins
+  rabbitmq_plugin:
+    names: rabbitmq_management
+    state: enabled
+  notify:
+    - restart rabbitmq
+
+- name: Add rabbitmq users admin
+  rabbitmq_user:
+    user: "{{ rabbitmq_user }}"
+    password: "{{ rabbitmq_password }}"
+    vhost: "{{ rabbitmq_vhost }}"
+    tags: administrator
+    configure_priv: .*
+    read_priv: .*
+    write_priv: .*
+    state: present
+
+- name: Start rabbitmq-server
+  systemd:
+    name: rabbitmq-server
+    state: restarted
+    enabled: yes

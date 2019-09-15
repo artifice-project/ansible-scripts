@@ -1,8 +1,8 @@
 ---
 # set up nginx service, enable, and restart
-- name: Template systemd service config
+- name: Template systemd gunicorn config
   template:
-    src: templates/service.j2
+    src: templates/gunicorn.j2
     dest: /etc/systemd/system/{{ app_name }}.service
 
 - name: Start systemd app service

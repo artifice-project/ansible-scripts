@@ -54,10 +54,15 @@
 - name: Start Celery workers
   command: >
     /home/{{ ansible_ssh_user }}/{{ app_name }}/env/bin/{{ entry_point }}
-    runcelery &
+    runcelery
   ignore_errors: no
   args:
     chdir: /home/{{ ansible_ssh_user }}/{{ app_name }}
+
+
+
+
+
 
 # - name: Run a Python script with cli args
 #   command: >

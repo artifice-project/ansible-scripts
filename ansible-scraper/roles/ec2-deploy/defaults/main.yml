@@ -7,6 +7,7 @@ packages:
   - git
   - tree
   - nginx
+  - rabbitmq-server
 pip_core:
   - pip
   - setuptools
@@ -18,11 +19,14 @@ postgres_core:
   - postgresql-contrib
   - postgresql-client-common
   - python3-psycopg2
+rabbitmq_user: admin
+rabbitmq_password: password
+rabbitmq_vhost: /
 os_environment:
   - key: SQLALCHEMY_DATABASE_URI
     value : postgresql+psycopg2://{{ postgres_user }}:{{ postgres_password }}@localhost:5432/{{ postgres_database }}
   - key: CELERY_BROKER_URL
-    value : postgresql+psycopg2://{{ postgres_user }}:{{ postgres_password }}@localhost:5432/{{ postgres_database }}
+    value : amqp://{{ rabbitmq_user }}:{{ rabbitmq_password }}@localhost/{{ rabbitmq_vhost }}
   - key: FLASK_CONFIG_PATH
     value: ../config/staging.py
   - key: AUTH_TOKEN

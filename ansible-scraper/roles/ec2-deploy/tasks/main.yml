@@ -14,10 +14,20 @@
   include: database.yml
   tags: ['database']
 
+- name: Configure rabbitmq
+  become: yes
+  include: broker.yml
+  tags: ['broker']
+
 - name: Install application
   become: no
   include: app.yml
   tags: ['app']
+
+- name: Configure celery
+  become: yes
+  include: celery.yml
+  tags: ['celery']
 
 - name: Configure the server
   become: yes
