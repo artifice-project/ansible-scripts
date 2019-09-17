@@ -32,6 +32,8 @@
   ignore_errors: yes
   args:
     chdir: /home/{{ ansible_ssh_user }}/{{ app_name }}
+    creates: migrations
+  when: migrations.state.exists == False
 
 - name: Manager Database migration
   command: >
@@ -51,13 +53,18 @@
   args:
     chdir: /home/{{ ansible_ssh_user }}/{{ app_name }}
 
-- name: Start Celery workers
-  command: >
-    /home/{{ ansible_ssh_user }}/{{ app_name }}/env/bin/{{ entry_point }}
-    runcelery
-  ignore_errors: no
-  args:
-    chdir: /home/{{ ansible_ssh_user }}/{{ app_name }}
+# - name: Start Celery workers
+#   command: >
+#     /home/{{ ansible_ssh_user }}/{{ app_name }}/env/bin/{{ entry_point }}
+#     runcelery
+#   ignore_errors: no
+#   args:
+#     chdir: /home/{{ ansible_ssh_user }}/{{ app_name }}
+
+- name: Start Celery workers in background
+  shell: "(/home/{{ ansible_ssh_user }}/{{ app_name }}/env/bin/{{ entry_point }} -c ../config/staging.py runcelery >/dev/null 2>&1 &)"
+  async: 10
+  poll: 0
 
 
 

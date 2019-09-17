@@ -21,13 +21,14 @@ ansible-playbook deploy.yml --extra-vars Name=something-memorable --tags server
 
 ```
 
-https://stackoverflow.com/questions/45457694/ansible-postgresql-module-to-create-role-and-add-database
+# artifice.scraper `ansible-scraper/`
 
-# Required Roles
-- core system configuration (apt-get update, etc)
-- installing base packages
-- cloning repo, building from source, copying to destination
-- set up database and user role
-- templating & configuring the server, restarting upon changes
-- firewall policy
-- availability test
+`create a new ec2 instance`
+```bash
+ansible-playbook deploy.yml -e Name=iced-coffee -t launch
+```
+
+`deploy the application`
+```bash
+ansible-playbook deploy.yml -e Name=iced-coffee -t "system, env, database, broker, app, server, test"
+```

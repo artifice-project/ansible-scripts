@@ -26,9 +26,9 @@ os_environment:
   - key: SQLALCHEMY_DATABASE_URI
     value : postgresql+psycopg2://{{ postgres_user }}:{{ postgres_password }}@localhost:5432/{{ postgres_database }}
   - key: CELERY_BROKER_URL
-    value : amqp://{{ rabbitmq_user }}:{{ rabbitmq_password }}@localhost/{{ rabbitmq_vhost }}
+    value : amqp://{{ rabbitmq_user }}:{{ rabbitmq_password }}@localhost:4369{{ rabbitmq_vhost }}
   - key: FLASK_CONFIG_PATH
-    value: ../config/staging.py
+    value: "{{ flask_config_path }}"
   - key: AUTH_TOKEN
     value: supersecrettoken
 
