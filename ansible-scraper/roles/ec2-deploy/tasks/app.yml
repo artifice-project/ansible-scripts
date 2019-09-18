@@ -19,10 +19,11 @@
     extra_args: '-e'   # this creates a link rather then copying the files
     virtualenv: /home/{{ ansible_ssh_user }}/{{ app_name }}/env
 
-# - name: Clear migration artifacts
-#   file:
-#     state: absent
-#     path: /home/{{ ansible_ssh_user }}/{{ app_name }}/migrations/
+- name: Create a directory for {{ app_name }} log files
+  file:
+    path: /var/log/flask
+    state: directory
+    owner: "{{ ansible_ssh_user }}"
 
 - name: Manager Database initalization
   command: >
@@ -33,7 +34,6 @@
   args:
     chdir: /home/{{ ansible_ssh_user }}/{{ app_name }}
     creates: migrations
-  when: migrations.state.exists == False
 
 - name: Manager Database migration
   command: >
@@ -61,15 +61,11 @@
 #   args:
 #     chdir: /home/{{ ansible_ssh_user }}/{{ app_name }}
 
-- name: Start Celery workers in background
-  shell: "(/home/{{ ansible_ssh_user }}/{{ app_name }}/env/bin/{{ entry_point }} -c ../config/staging.py runcelery >/dev/null 2>&1 &)"
-  async: 10
-  poll: 0
-
-
-
-
-
+# # this one KINDA works...
+# - name: Start Celery workers in background
+#   shell: "(/home/{{ ansible_ssh_user }}/{{ app_name }}/env/bin/{{ entry_point }} -c ../config/staging.py runcelery >/dev/null 2>&1 &)"
+#   async: 10
+#   poll: 0
 
 # - name: Run a Python script with cli args
 #   command: >

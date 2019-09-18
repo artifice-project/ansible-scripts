@@ -1,22 +1,32 @@
 ---
 # configures celery to run as a daemon process
 # https://stackoverflow.com/questions/14275821/how-to-run-celery-as-a-daemon-in-production
-- name: Copy file to /etc/default/celeryd
-  template:
-    src: templates/celery_conf.j2
-    dest: /etc/init.d/celery
+# https://medium.com/@ahmadalsajid/daemonizing-celery-beat-with-systemd-97f1203e7b32
+- name: Create directories for celery log & pid
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ ansible_ssh_user }}"
+  with_items:
+    - /var/log/celery
+    - /var/run/celery
 
-- name: Template celery config to /etc/systemd/system/celery.service
+- name: Template celeryd config /etc/default/celeryd
   template:
-    src: templates/celery_service.j2
-    dest: /etc/systemd/system/celery.service
+    src: templates/celeryd_conf.j2
+    dest: /etc/default/celeryd
 
-- name: Restart daemon
+- name: Template celeryd service /etc/systemd/system/celeryd.service
+  template:
+    src: templates/celeryd_service.j2
+    dest: /etc/systemd/system/celeryd.service
+
+- name: Restart systemd daemon
   systemd:
     daemon_reload: yes
 
 - name: Start systemd celery service
   systemd:
-    name: celery.service
+    name: celeryd.service
     state: restarted
     enabled: yes
