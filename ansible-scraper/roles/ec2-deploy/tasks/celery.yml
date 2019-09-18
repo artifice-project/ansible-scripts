@@ -2,15 +2,6 @@
 # configures celery to run as a daemon process
 # https://stackoverflow.com/questions/14275821/how-to-run-celery-as-a-daemon-in-production
 # https://medium.com/@ahmadalsajid/daemonizing-celery-beat-with-systemd-97f1203e7b32
-- name: Create directories for celery log & pid
-  file:
-    path: "{{ item }}"
-    state: directory
-    owner: "{{ ansible_ssh_user }}"
-  with_items:
-    - /var/log/celery
-    - /var/run/celery
-
 - name: Template celeryd config /etc/default/celeryd
   template:
     src: templates/celeryd_conf.j2

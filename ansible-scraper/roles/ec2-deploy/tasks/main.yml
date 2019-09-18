@@ -9,6 +9,11 @@
   include: environment.yml
   tags: ['env']
 
+- name: Create logging facilities
+  become: yes
+  include: logging.yml
+  tags: ['logs']
+
 - name: Configure postgres
   become: yes
   include: database.yml

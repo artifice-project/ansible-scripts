@@ -19,12 +19,6 @@
     extra_args: '-e'   # this creates a link rather then copying the files
     virtualenv: /home/{{ ansible_ssh_user }}/{{ app_name }}/env
 
-- name: Create a directory for {{ app_name }} log files
-  file:
-    path: /var/log/flask
-    state: directory
-    owner: "{{ ansible_ssh_user }}"
-
 - name: Manager Database initalization
   command: >
     /home/{{ ansible_ssh_user }}/{{ app_name }}/env/bin/{{ entry_point }}

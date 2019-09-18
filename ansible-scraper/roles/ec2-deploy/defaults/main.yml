@@ -1,6 +1,9 @@
 ---
 # defaults file for ec2-deploy
+
+# application source code
 repo_url: https://github.com/{{ github_user }}/{{ app_name }}.git
+# system packages
 packages:
   - python3-pip
   - python3-dev
@@ -19,9 +22,7 @@ postgres_core:
   - postgresql-contrib
   - postgresql-client-common
   - python3-psycopg2
-rabbitmq_user: admin
-rabbitmq_password: password
-rabbitmq_vhost: /
+# environment variables
 os_environment:
   - key: SQLALCHEMY_DATABASE_URI
     value : postgresql+psycopg2://{{ postgres_user }}:{{ postgres_password }}@localhost:5432/{{ postgres_database }}
@@ -31,7 +32,9 @@ os_environment:
     value: "{{ flask_config_path }}"
   - key: AUTH_TOKEN
     value: supersecrettoken
-
-gunicorn_error_log: /home/{{ ansible_ssh_user }}/{{ app_name }}/gunicorn-error.log
-gunicorn_access_log: /home/{{ ansible_ssh_user }}/{{ app_name }}/gunicorn-access.log
+# application
 wsgi_path: "{{ entry_point }}.core.wsgi"
+# log files
+log_file_directory: /home/{{ ansible_ssh_user }}/log
+gunicorn_error_log: {{ log_file_directory }}/gunicorn/gunicorn-error.log
+gunicorn_access_log: {{ log_file_directory }}/gunicorn/gunicorn-access.log
