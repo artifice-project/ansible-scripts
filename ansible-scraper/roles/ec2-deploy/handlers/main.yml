@@ -3,4 +3,10 @@
 - name: restart rabbitmq
   service:
     name: rabbitmq-server
-    state: restarted 
+    state: restarted
+
+- name: restart redis
+  service:
+    name: redis-server
+    state: started
+    # if issues arise with fresh installs, try setting this state value to `restarted`

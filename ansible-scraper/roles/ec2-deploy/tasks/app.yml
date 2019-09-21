@@ -16,7 +16,7 @@
 - name: Install {{ app_name }} source
   pip:
     name: /home/{{ ansible_ssh_user }}/{{ app_name }}
-    extra_args: '-e'   # this creates a link rather then copying the files
+    extra_args: '-e'   # installs editably
     virtualenv: /home/{{ ansible_ssh_user }}/{{ app_name }}/env
 
 - name: Manager Database initalization
@@ -45,29 +45,3 @@
   ignore_errors: no
   args:
     chdir: /home/{{ ansible_ssh_user }}/{{ app_name }}
-
-# - name: Start Celery workers
-#   command: >
-#     /home/{{ ansible_ssh_user }}/{{ app_name }}/env/bin/{{ entry_point }}
-#     runcelery
-#   ignore_errors: no
-#   args:
-#     chdir: /home/{{ ansible_ssh_user }}/{{ app_name }}
-
-# # this one KINDA works...
-# - name: Start Celery workers in background
-#   shell: "(/home/{{ ansible_ssh_user }}/{{ app_name }}/env/bin/{{ entry_point }} -c ../config/staging.py runcelery >/dev/null 2>&1 &)"
-#   async: 10
-#   poll: 0
-
-# - name: Run a Python script with cli args
-#   command: >
-#     /home/{{ ansible_ssh_user }}/{{ app_name }}/env/bin/python
-#     ./manage.py
-#     db
-#     upgrade
-#   ignore_errors: yes
-#   args:
-#     chdir: /home/{{ ansible_ssh_user }}/{{ app_name }}
-#   environment:
-#     PGPASSWORD: "{{ postgres_password }}"

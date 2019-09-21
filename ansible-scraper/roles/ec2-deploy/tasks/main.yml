@@ -14,27 +14,32 @@
   include: logging.yml
   tags: ['logs']
 
-- name: Configure postgres
+- name: Configure Postgres
   become: yes
   include: database.yml
   tags: ['database']
 
-- name: Configure rabbitmq
+- name: Configure RabbitMQ
   become: yes
   include: broker.yml
   tags: ['broker']
+
+- name: Configure Redis
+  become: yes
+  include: redis.yml
+  tags: ['redis']
 
 - name: Install application
   become: no
   include: app.yml
   tags: ['app']
 
-- name: Configure celery
+- name: Configure Celery
   become: yes
   include: celery.yml
   tags: ['celery']
 
-- name: Configure the server
+- name: Configure Nginx server
   become: yes
   include: server.yml
   tags: ['server']

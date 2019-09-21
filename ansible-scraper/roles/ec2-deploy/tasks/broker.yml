@@ -30,3 +30,10 @@
     name: rabbitmq-server
     state: started
     enabled: yes
+
+## use Lazy loading policy, so that messages are not stored in RAM until needed.
+## without this change, the queue will unexpectedly quit under heavy loads.
+## COMMAND:
+# sudo rabbitmqctl set_policy Lazy "^lazy-queue$" '{"queue-mode":"lazy"}' --apply-to queues
+## RETURNS:
+# Setting policy "Lazy" for pattern "^lazy-queue$" to "{\"queue-mode\":\"lazy\"}" with priority "0"
