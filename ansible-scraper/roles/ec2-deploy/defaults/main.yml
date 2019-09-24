@@ -41,7 +41,8 @@ os_environment:
     value : postgresql+psycopg2://{{ postgres_user }}:{{ postgres_password }}@localhost:5432/{{ postgres_database }}
 
   - key: CELERY_BROKER_URL
-    value : amqp://{{ rabbitmq_user }}:{{ rabbitmq_password }}@localhost:5672{{ rabbitmq_vhost }}
+    value : redis://localhost:6379/0
+    # value : amqp://{{ rabbitmq_user }}:{{ rabbitmq_password }}@localhost:5672{{ rabbitmq_vhost }}
 
   - key: FLASK_CONFIG_PATH
     value: "{{ flask_config_path }}"
@@ -51,3 +52,15 @@ os_environment:
 
   - key: AUTH_TOKEN
     value: supersecrettoken
+
+  - key: TWILIO_SID
+    value: "{{ TWILIO_SID }}"
+
+  - key: TWILIO_TOKEN
+    value: "{{ TWILIO_TOKEN }}"
+
+  - key: TWILIO_FROM_NUM
+    value: "{{ TWILIO_FROM_NUM }}"
+
+  - key: TWILIO_TO_NUM
+    value: "{{ TWILIO_TO_NUM }}"

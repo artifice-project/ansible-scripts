@@ -1,4 +1,8 @@
 ---
+  # - name: Configure RabbitMQ
+  #   become: yes
+  #   include: broker.yml
+  #   tags: ['broker']
 # configure rabbitmq-server
 - name: Ensure rabbitmq is installed
   apt:

@@ -1,5 +1,6 @@
 # Custom list
 # resetdatabase.sh
+hosts.ini
 examples/
 bin/
 include/
@@ -112,7 +113,7 @@ media/
 *.pyc
 *.db
 *.pid
-# django migrations 
+# django migrations
 **/migrations/**
 !**/migrations
 !**/migrations/__init__.py

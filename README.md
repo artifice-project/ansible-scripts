@@ -30,5 +30,5 @@ ansible-playbook deploy.yml -e Name=iced-coffee -t launch
 
 `deploy the application`
 ```bash
-ansible-playbook deploy.yml -e Name=iced-coffee -t "system, env, database, broker, app, server, test"
+ansible-playbook deploy.yml -e Name=iced-coffee -t "system, env, logs, database, redis, app, celery, server, test"
 ```
