@@ -22,17 +22,17 @@
 
 - name: Manager Database initalization
   command: >
-    /home/{{ ansible_ssh_user }}/{{ app_name }}/env/bin/{{ entry_point }}
+    env/bin/{{ entry_point }}
     db
     init
   ignore_errors: yes
   args:
     chdir: /home/{{ ansible_ssh_user }}/{{ app_name }}
-    creates: /home/{{ ansible_ssh_user }}/{{ app_name }}/migrations
+    creates: migrations/
 
 - name: Manager Database migration
   command: >
-    /home/{{ ansible_ssh_user }}/{{ app_name }}/env/bin/{{ entry_point }}
+    env/bin/{{ entry_point }}
     db
     migrate
   ignore_errors: yes
@@ -41,7 +41,7 @@
 
 - name: Manager Database upgrade
   command: >
-    /home/{{ ansible_ssh_user }}/{{ app_name }}/env/bin/{{ entry_point }}
+    env/bin/{{ entry_point }}
     db
     upgrade
   ignore_errors: no
