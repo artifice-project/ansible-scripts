@@ -28,6 +28,7 @@
   ignore_errors: yes
   args:
     chdir: /home/{{ ansible_ssh_user }}/{{ app_name }}
+    creates: /home/{{ ansible_ssh_user }}/{{ app_name }}/migrations
 
 - name: Manager Database migration
   command: >
