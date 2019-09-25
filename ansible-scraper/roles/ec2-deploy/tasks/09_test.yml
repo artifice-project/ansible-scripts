@@ -4,6 +4,7 @@
   get_url:
     url: http://{{ inventory_hostname }}/health
     dest: /tmp/index.html
+    force: yes
 
 - name: read html
   shell: cat /tmp/index.html
