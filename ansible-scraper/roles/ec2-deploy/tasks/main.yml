@@ -29,6 +29,11 @@
   include: 06_app.yml
   tags: ['app']
 
+- name: Migrate database
+  become: no
+  include: 06a_migration.yml
+  tags: ['migrate']
+
 - name: Configure Celery
   become: yes
   include: 07_celery.yml
