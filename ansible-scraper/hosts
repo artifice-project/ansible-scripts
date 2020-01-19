@@ -1,9 +1,7 @@
-[webservers]
-# Add hosts here
+[webserver]
 13.59.113.23
 
-
-[webservers:vars]
+[webserver:vars]
 # Local variables for Ansible playbooks
 ansible_ssh_user=ubuntu
 github_user=artifice-project
@@ -13,6 +11,11 @@ flask_config_path=../config/staging.py
 postgres_user=ubuntu
 postgres_database=artifice_scraper
 postgres_password=password
-rabbitmq_user=admin
-rabbitmq_password=password
-rabbitmq_vhost=/
+#rabbitmq_user=admin
+#rabbitmq_password=password
+#rabbitmq_vhost=/
+# secrets
+TWILIO_SID=AC1b4d7861da09d3f34dd31ee2752bccf3
+TWILIO_TOKEN=fd2d59e384d1c72c026afd1126ae8ef4
+TWILIO_FROM_NUM=+17165174357
+TWILIO_TO_NUM=+17163102488
