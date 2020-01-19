@@ -52,15 +52,3 @@ os_environment:
 
   - key: AUTH_TOKEN
     value: supersecrettoken
-
-  - key: TWILIO_SID
-    value: "{{ TWILIO_SID }}"
-
-  - key: TWILIO_TOKEN
-    value: "{{ TWILIO_TOKEN }}"
-
-  - key: TWILIO_FROM_NUM
-    value: "{{ TWILIO_FROM_NUM }}"
-
-  - key: TWILIO_TO_NUM
-    value: "{{ TWILIO_TO_NUM }}"
